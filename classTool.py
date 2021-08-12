@@ -53,41 +53,51 @@ class OkCupidSelenium:
         # print("1")
         while(people > 0):
             cnt = 0
+            #press on the "Likes" in the menu
             print("people are => {}".format(people))
             search = driver.find_element_by_xpath("//*[@id=\"nav_ratings\"]")
             search.click()
             try:
+                #in the "Likes" press "you like"
                 search2 = WebDriverWait(driver, 20).until(
                     EC.presence_of_element_located((By.XPATH, "//*[@id=\"userRows-app\"]/section/div/div/span[3]/a"))
                 )
                 search2.click()
-                print("here")
                 time.sleep(7)
+                #press on the first user
                 search3 = driver.find_element_by_xpath(
                     "//*[@id=\"userRows-app\"]/div/main/div/div/div/div[2]/div[1]/div[1]/div")
                 search3.click()
                 time.sleep(4)
-                print("will check it now!")
-                search4 = driver.find_elements_by_class_name("profile-pill-buttons")
-                for s in search4:
-                    if(cnt == 0):
-                        cnt += 1
-                    else:
-                        k = s.find_element_by_xpath(
-                            "/html/body/div[1]/main/div[1]/div[2]/div/div/div[3]/span/div/button[2]")
-                        k.click()
-                        time.sleep(4)
+                # search4 = driver.find_elements_by_class_name("profile-pill-buttons")
+                # for s in search4:
+                #     if(cnt == 0):
+                #         cnt += 1
+                #     else:
+                #         k = s.find_element_by_xpath(
+                #             "/html/body/div[1]/main/div[1]/div[2]/div/div/div[3]/span/div/button[2]")
+                #         k.click()
+                #         time.sleep(4)
 
-                m = driver.find_element_by_xpath(
-                    "/html/body/div[1]/main/div[1]/div[4]/div[2]/div[2]/div/div/div/div/div/div/div[2]/textarea")
-                m.send_keys(contain)
-                m = driver.find_element_by_xpath(
-                    "//*[@id=\"main_content\"]/div[4]/div[2]/div[2]/div/div/div/div/div/div/div[3]/button")
-                m.click()
+
+
+                #now inside the profile and will click "message"
+                search4 = driver.find_element_by_xpath(
+                    "/html/body/div[1]/main/div[1]/div[3]/div/div/div[3]/span/div/button[2]")
+                search4.click()
+
+                #now inside the message
+                search4 = driver.find_element_by_xpath(
+                    "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[2]/textarea")
+                search4.click()
+                search4.send_keys(contain)
+                search4 = driver.find_element_by_xpath(
+                    "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[3]/button")
+                search4.click()
                 time.sleep(4)
-                m = driver.find_element_by_xpath(
-                    "//*[@id=\"main_content\"]/div[4]/div[2]/div[2]/div/div/div/div/div/div/div[1]/button/span")
-                m.click()
+                search4 = driver.find_element_by_xpath(
+                    "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[1]/button")
+                search4.click()
                 driver.refresh()
                 time.sleep(4)
                 people -= 1

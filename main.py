@@ -11,10 +11,11 @@ if __name__ == "__main__":
     PATH = "C:\Program Files (x86)\chromedriver.exe"
     user_name = dict.T["user_name"]
     password = dict.T["password"]
-    ok = OkCupidSelenium(user_name, password, PATH)
+    # ok = OkCupidSelenium(user_name, password, PATH)
     contain = "*משחק אותה שלא מתלהב בכלל* מה קורה?"
     people = 300
     while(True):
+        ok = OkCupidSelenium(user_name, password, PATH)
         driver = ok.getDriver()
         ok.login(driver)
         ######################################################################

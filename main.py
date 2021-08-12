@@ -1,5 +1,6 @@
 import classTool
 from classTool import OkCupidSelenium
+import dict
 
 if __name__ == "__main__":
     like_counter = 0
@@ -8,8 +9,8 @@ if __name__ == "__main__":
     saved_locations = ["`Akko", "Qiryat Yam", "Haifa", "Qiryat Motzkin", "Qiryat Bialik", "`Afula", "Yoqne`am",
                        "Or `Aqiva", "Tiberias", "Shelomi", "Karmi’el", "Ma`alot", "Hadar HaKarmel"]
     PATH = "C:\Program Files (x86)\chromedriver.exe"
-    user_name = "name@hotmail.com"
-    password = "password"
+    user_name = dict.T["user_name"]
+    password = dict.T["password"]
     ok = OkCupidSelenium(user_name, password, PATH)
     contain = "*משחק אותה שלא מתלהב בכלל* מה קורה?"
     people = 300

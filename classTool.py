@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 
 class OkCupidSelenium:
     def __init__(self, user_name, password, PATH):
@@ -11,7 +12,6 @@ class OkCupidSelenium:
         self._password = password
         self._PATH = PATH
         self._okCupidPATH = "https://www.okcupid.com"
-
 
     def getDriver(self):
         driver = webdriver.Chrome(self._PATH)
@@ -34,7 +34,6 @@ class OkCupidSelenium:
         search.click()
         time.sleep(10)
 
-
     def like(self, driver):
         search = driver.find_element_by_class_name("likes-pill-button-inner")
         search.click()
@@ -46,76 +45,86 @@ class OkCupidSelenium:
         time.sleep(5)
 
     def message(self, driver, contain, people):
-        # search = driver.find_element_by_xpath("/html/body/div[1]/main/nav/div/span[1]/a[4]/div/span")
-        # print("0")
-        # search = driver.find_element_by_xpath("//*[@id=\"nav_ratings\"]")
-        # search.click()
-        # print("1")
         while(people > 0):
             cnt = 0
-            #press on the "Likes" in the menu
             print("people are => {}".format(people))
-            search = driver.find_element_by_xpath("//*[@id=\"nav_ratings\"]")
-            search.click()
+
+            # press on the "Likes" in the menu
             try:
-                #in the "Likes" press "you like"
+                search = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located((By.XPATH, "//*[@id=\"nav_ratings\"]"))
+                )
+                search.click()
+            finally:pass
+
+            # in the "Likes" press "you like"
+            try:
                 search2 = WebDriverWait(driver, 20).until(
                     EC.presence_of_element_located((By.XPATH, "//*[@id=\"userRows-app\"]/section/div/div/span[3]/a"))
                 )
                 search2.click()
-                time.sleep(7)
-                #press on the first user
-                search3 = driver.find_element_by_xpath(
-                    "//*[@id=\"userRows-app\"]/div/main/div/div/div/div[2]/div[1]/div[1]/div")
+            finally:pass
+
+            # press on the first profile
+            try:
+                search3 = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.XPATH, "//*[@id=\"userRows-app\"]/div/main/div/div/div/div[2]/div[1]/div[1]/div"))
+                )
                 search3.click()
-                time.sleep(4)
-                # search4 = driver.find_elements_by_class_name("profile-pill-buttons")
-                # for s in search4:
-                #     if(cnt == 0):
-                #         cnt += 1
-                #     else:
-                #         k = s.find_element_by_xpath(
-                #             "/html/body/div[1]/main/div[1]/div[2]/div/div/div[3]/span/div/button[2]")
-                #         k.click()
-                #         time.sleep(4)
-
-
-
-                #now inside the profile and will click "message"
-                search4 = driver.find_element_by_xpath(
-                    "/html/body/div[1]/main/div[1]/div[3]/div/div/div[3]/span/div/button[2]")
-                search4.click()
-
-                #now inside the message
-                search4 = driver.find_element_by_xpath(
-                    "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[2]/textarea")
-                search4.click()
-                search4.send_keys(contain)
-                search4 = driver.find_element_by_xpath(
-                    "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[3]/button")
-                search4.click()
-                time.sleep(4)
-                search4 = driver.find_element_by_xpath(
-                    "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[1]/button")
-                search4.click()
-                driver.refresh()
-                time.sleep(4)
-                people -= 1
-
             finally: pass
-            # print("2")
-            # #search2 = driver.find_element_by_xpath("//*[@id=\"userRows-app\"]/section/div/div/span[3]/a")
-            # time.sleep(3)
-            # search3 = driver.find_element_by_xpath("//*[@id=\"userRows-app\"]/div/main/div/div/div/div[2]/div[1]/div[1]/div")
-            # search3.click()
-            # print("3")
-            # time.sleep(3)
 
+            # inside the profile press "message" button
+            try:
+                search4 = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, "/html/body/div[1]/main/div[1]/div[3]/div/div/div[3]/span/div/button[2]")))
+                search4.click()
+            finally:pass
 
-            # search = driver.find_element_by_class_name("pass-pill-button-inner")
-            # search.click()
-            # time.sleep(5)
+            # inside the message box
+            try:
+                search5 = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located(
+                (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[2]/textarea")))
+                search5.send_keys(contain)
+            # if their message box is full or other disturb, it pass the profile+exit from the profile
+            except:
+                search5 = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div/div[1]/div/button[2]")))
+                search5.click()
+                # exit the profile + refresh and continue to the next profile (while loop again)
+                try:
+                    search5 = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located(
+                            (By.XPATH, "/html/body/div[1]/main/div[1]/div[3]/div/div/div[3]/span/div/button[1]")))
+                    search5.click()
+                    driver.refresh()
+                    time.sleep(5)
+                    continue
+                finally:
+                    pass
 
+            # press send button after insert the message inside the message box
+            try:
+                search6 = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[3]/button")))
+                search6.click()
+            except:
+                print("we're fucked up.")
+            # exit from the message box
+            try:
+                search6 = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[1]/button")))
+                search6.click()
+            finally:pass
+            time.sleep(5)
+            # refresh the list
+            driver.refresh()
+            time.sleep(5)
+            people -= 1
 
     def location(self, driver):
         search_location = driver.find_element_by_class_name("cardsummary-location")

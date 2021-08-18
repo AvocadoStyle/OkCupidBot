@@ -67,7 +67,7 @@ class OkCupidSelenium:
 
             # press on the first profile
             try:
-                search3 = WebDriverWait(driver, 20).until(
+                search3 = WebDriverWait(driver, 40).until(
                     EC.presence_of_element_located((By.XPATH, "//*[@id=\"userRows-app\"]/div/main/div/div/div/div[2]/div[1]/div[1]/div"))
                 )
                 search3.click()
@@ -79,6 +79,7 @@ class OkCupidSelenium:
                     EC.presence_of_element_located(
                         (By.XPATH, "/html/body/div[1]/main/div[1]/div[3]/div/div/div[3]/span/div/button[2]")))
                 search4.click()
+                time.sleep(1)
             finally:pass
 
             # inside the message box
@@ -86,19 +87,41 @@ class OkCupidSelenium:
                 search5 = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located(
                 (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[2]/textarea")))
+                time.sleep(1)
                 search5.send_keys(contain)
+                time.sleep(2)
             # if their message box is full or other disturb, it pass the profile+exit from the profile
             except:
-                search5 = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located(
-                        (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div/div[1]/div/button[2]")))
-                search5.click()
+                try:
+                    search5 = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located(
+                            (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div/div[1]/div/button[2]")))
+                    # search5 = WebDriverWait(driver, 20).until(
+                    #     EC.presence_of_element_located(
+                    #         (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[1]/div[1]/button")))
+                    time.sleep(2)
+                    search5.click()
+                    time.sleep(2)
+                except:
+                    # search5 = WebDriverWait(driver, 20).until(
+                    #     EC.presence_of_element_located(
+                    #         (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div/div[1]/div/button[2]")))
+                    search5 = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located(
+                            (By.XPATH,
+                             "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/"
+                             "div/div/div/div/div/div/div[1]/div[1]/button")))
+                    time.sleep(2)
+                    search5.click()
+                    time.sleep(2)
+
                 # exit the profile + refresh and continue to the next profile (while loop again)
                 try:
                     search5 = WebDriverWait(driver, 20).until(
                         EC.presence_of_element_located(
                             (By.XPATH, "/html/body/div[1]/main/div[1]/div[3]/div/div/div[3]/span/div/button[1]")))
                     search5.click()
+                    time.sleep(2)
                     driver.refresh()
                     time.sleep(5)
                     continue

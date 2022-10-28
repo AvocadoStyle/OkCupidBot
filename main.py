@@ -8,7 +8,7 @@ if __name__ == "__main__":
     check_counter = 1000
     saved_locations = ["`Akko", "Qiryat Yam", "Haifa", "Qiryat Motzkin", "Qiryat Bialik", "`Afula", "Yoqne`am",
                        "Or `Aqiva", "Tiberias", "Shelomi", "Karmi’el", "Ma`alot", "Hadar HaKarmel"]
-    PATH = "C:\Program Files (x86)\chromedriver.exe"
+    PATH = "chromedriver.exe"
     user_name = T["user_name"]
     password = T["password"]
     # ok = OkCupidSelenium(user_name, password, PATH)

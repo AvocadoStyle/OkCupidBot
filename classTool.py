@@ -45,6 +45,7 @@ class OkCupidSelenium:
         time.sleep(5)
 
     def message(self, driver, contain, people):
+        people = 1
         while(people > 0):
             cnt = 0
             print("people are => {}".format(people))
@@ -60,39 +61,46 @@ class OkCupidSelenium:
             # in the "Likes" press "you like"
             try:
                 search2 = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.XPATH, "//*[@id=\"userRows-app\"]/section/div/div/span[3]/a"))
+                    EC.presence_of_element_located((By.XPATH, "//*[@id=\"userRows-app\"]/section/div/nav/span[3]/a"))
                 )
                 search2.click()
             finally:pass
 
             # press on the first profile
+            print("debug1")
             try:
-                search3 = WebDriverWait(driver, 40).until(
+                time.sleep(3)
+                search3 = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.XPATH, "//*[@id=\"userRows-app\"]/div/main/div/div/div/div[2]/div[1]/div[1]/div"))
                 )
                 search3.click()
+            except:
+                print("somthing is wrong with the first user")
             finally: pass
-
+            print("debug2")
+            time.sleep(3)
             # inside the profile press "message" button
             try:
                 search4 = WebDriverWait(driver, 20).until(
                     EC.presence_of_element_located(
-                        (By.XPATH, "/html/body/div[1]/main/div[1]/div[3]/div/div/div[3]/span/div/button[2]")))
+                        (By.XPATH, "/html/body/div[1]/main/div/div[3]/div[1]/div/div/div[3]/div/button[2]/div")))
                 search4.click()
                 time.sleep(1)
             finally:pass
-
+            print("debug3")
+            time.sleep(1)
             # inside the message box
             try:
                 search5 = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located(
-                (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[2]/textarea")))
+                (By.XPATH, "/html/body/div[1]/main/div/div[1]/div[2]/div[2]/div/div/div/div/div/div[2]/textarea")))
                 time.sleep(1)
                 search5.send_keys(contain)
                 time.sleep(2)
             # if their message box is full or other disturb, it pass the profile+exit from the profile
             except:
                 try:
+                    print("disturbed1")
                     search5 = WebDriverWait(driver, 20).until(
                         EC.presence_of_element_located(
                             (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div/div[1]/div/button[2]")))
@@ -127,7 +135,7 @@ class OkCupidSelenium:
                     continue
                 finally:
                     pass
-
+            print("debug4")
             # press send button after insert the message inside the message box
             try:
                 search6 = WebDriverWait(driver, 20).until(

@@ -18,6 +18,7 @@ if __name__ == "__main__":
         ok = OkCupidSelenium(user_name, password, PATH)
         driver = ok.getDriver()
         ok.login(driver)
+        input("type when you're ready")
         ######################################################################
         # method 1: like dislike method
         # while(check_counter):

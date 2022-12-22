@@ -1,1 +1,1 @@
-pip install selenium==4.2
+selenium==4.2

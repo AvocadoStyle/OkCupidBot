@@ -1,5 +1,6 @@
 import time
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,13 +15,23 @@ class OkCupidSelenium:
         self._okCupidPATH = "https://www.okcupid.com"
 
     def getDriver(self):
-        driver = webdriver.Chrome(self._PATH)
+        # driver = webdriver.Chrome(self._PATH)
+
+
+
+        # "C:\Users\edenr\AppData\Local\Google\Chrome\User Data\Profile 1"
+
+        # width = driver.get_window_size().get("width")
+        options = webdriver.ChromeOptions()
+        options.add_argument(r"user-data-dir=C:\Users\edenr\AppData\Local\Google\Chrome\User Data\Profile 1")
+        driver = webdriver.Chrome(executable_path=self._PATH, chrome_options=options)
+        driver.set_window_size(1900, 1024)
         driver.get(self._okCupidPATH)
         time.sleep(3)
         return driver
 
     def login(self, driver):
-        search = driver.find_element_by_class_name("splashdtf-header-signin-splashButton")
+        search = driver.find_element_by_class_name("c0J0grIjyKY6YuiL9OO7")
         search.click()
         time.sleep(2)
         search = driver.find_element_by_name("username")
@@ -45,7 +56,6 @@ class OkCupidSelenium:
         time.sleep(5)
 
     def message(self, driver, contain, people):
-        people = 1
         while(people > 0):
             cnt = 0
             print("people are => {}".format(people))
@@ -61,7 +71,7 @@ class OkCupidSelenium:
             # in the "Likes" press "you like"
             try:
                 search2 = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.XPATH, "//*[@id=\"userRows-app\"]/section/div/nav/span[3]/a"))
+                    EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/main/div/div[2]/section/div/nav/div/span[3]/a"))
                 )
                 search2.click()
             finally:pass
@@ -140,7 +150,7 @@ class OkCupidSelenium:
             try:
                 search6 = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located(
-                    (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[3]/button")))
+                    (By.XPATH, "/html/body/div[1]/main/div/div[1]/div[2]/div[2]/div/div/div/div/div/div[3]/button")))
                 search6.click()
             except:
                 print("we're fucked up.")
@@ -148,7 +158,7 @@ class OkCupidSelenium:
             try:
                 search6 = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located(
-                    (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[1]/button")))
+                    (By.XPATH, "/html/body/div[1]/main/div/div[1]/div[2]/div[2]/div/div/div/div/div/div[1]/button/i")))
                 search6.click()
             finally:pass
             time.sleep(5)

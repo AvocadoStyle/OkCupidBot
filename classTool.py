@@ -56,10 +56,14 @@ class OkCupidSelenium:
         time.sleep(5)
 
     def message(self, driver, contain, people):
+        _disturbed_cnt = 0
+        cnt_col = 4
+        cnt_row = 3
         while(people > 0):
-            cnt = 0
-            print("people are => {}".format(people))
 
+            print("people are => {}".format(people))
+            print(f"disturbed people count= {_disturbed_cnt}")
+            print(f"cnt_row={cnt_row} cnt_col={cnt_col}")
             # press on the "Likes" in the menu
             try:
                 search = WebDriverWait(driver, 20).until(
@@ -74,14 +78,18 @@ class OkCupidSelenium:
                     EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/main/div/div[2]/section/div/nav/div/span[3]/a"))
                 )
                 search2.click()
+                time.sleep(1)
+                driver.refresh()
+                time.sleep(4)
             finally:pass
 
             # press on the first profile
             print("debug1")
             try:
                 time.sleep(3)
+
                 search3 = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.XPATH, "//*[@id=\"userRows-app\"]/div/main/div/div/div/div[2]/div[1]/div[1]/div"))
+                    EC.presence_of_element_located((By.XPATH, f"//*[@id=\"userRows-app\"]/div/main/div/div/div/div[2]/div[{cnt_row}]/div[{cnt_col}]/div"))
                 )
                 search3.click()
             except:
@@ -91,7 +99,7 @@ class OkCupidSelenium:
             time.sleep(3)
             # inside the profile press "message" button
             try:
-                search4 = WebDriverWait(driver, 20).until(
+                search4 = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located(
                         (By.XPATH, "/html/body/div[1]/main/div/div[3]/div[1]/div/div/div[3]/div/button[2]/div")))
                 search4.click()
@@ -101,7 +109,7 @@ class OkCupidSelenium:
             time.sleep(1)
             # inside the message box
             try:
-                search5 = WebDriverWait(driver, 20).until(
+                search5 = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(
                 (By.XPATH, "/html/body/div[1]/main/div/div[1]/div[2]/div[2]/div/div/div/div/div/div[2]/textarea")))
                 time.sleep(1)
@@ -110,10 +118,11 @@ class OkCupidSelenium:
             # if their message box is full or other disturb, it pass the profile+exit from the profile
             except:
                 try:
-                    print("disturbed1")
-                    search5 = WebDriverWait(driver, 20).until(
+                    _disturbed_cnt += 1
+                    print(f"disturbed={_disturbed_cnt}")
+                    search5 = WebDriverWait(driver, 5).until(
                         EC.presence_of_element_located(
-                            (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div/div[1]/div/button[2]")))
+                            (By.XPATH, "/html/body/div[1]/main/div/div[1]/div[2]/div[2]/div/div/div/div/div/div[1]/button/i")))
                     # search5 = WebDriverWait(driver, 20).until(
                     #     EC.presence_of_element_located(
                     #         (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div[1]/div[1]/button")))
@@ -124,11 +133,10 @@ class OkCupidSelenium:
                     # search5 = WebDriverWait(driver, 20).until(
                     #     EC.presence_of_element_located(
                     #         (By.XPATH, "/html/body/div[1]/main/div[1]/div[1]/div[2]/div/div[1]/div/button[2]")))
-                    search5 = WebDriverWait(driver, 20).until(
+                    search5 = WebDriverWait(driver, 5).until(
                         EC.presence_of_element_located(
                             (By.XPATH,
-                             "/html/body/div[1]/main/div[1]/div[1]/div[2]/div[2]/"
-                             "div/div/div/div/div/div/div[1]/div[1]/button")))
+                             "/html/body/div[1]/main/div/div[3]/div[1]/div/div/div[3]/div/button[1]")))
                     time.sleep(2)
                     search5.click()
                     time.sleep(2)
@@ -137,7 +145,7 @@ class OkCupidSelenium:
                 try:
                     search5 = WebDriverWait(driver, 20).until(
                         EC.presence_of_element_located(
-                            (By.XPATH, "/html/body/div[1]/main/div[1]/div[3]/div/div/div[3]/span/div/button[1]")))
+                            (By.XPATH, "/html/body/div[1]/main/div/div[3]/div[1]/div/div/div[3]/div/button[1]/div")))
                     search5.click()
                     time.sleep(2)
                     driver.refresh()

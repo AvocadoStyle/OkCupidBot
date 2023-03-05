@@ -13,7 +13,7 @@ if __name__ == "__main__":
     password = T["password"]
     # ok = OkCupidSelenium(user_name, password, PATH)
     contain = "*משחק אותה שלא מתלהב בכלל* מה קורה?"
-    people = 300
+    people = 50000
     while(True):
         ok = OkCupidSelenium(user_name, password, PATH)
         driver = ok.getDriver()

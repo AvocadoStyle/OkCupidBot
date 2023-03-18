@@ -58,7 +58,7 @@ class OkCupidSelenium:
     def message(self, driver, contain, people):
         _disturbed_cnt = 0
         cnt_col = 4
-        cnt_row = 3
+        cnt_row = 2
         while(people > 0):
 
             print("people are => {}".format(people))

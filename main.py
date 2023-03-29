@@ -12,7 +12,8 @@ if __name__ == "__main__":
     user_name = T["user_name"]
     password = T["password"]
     # ok = OkCupidSelenium(user_name, password, PATH)
-    contain = "*משחק אותה שלא מתלהב בכלל* מה קורה?"
+    # contain = "*משחק אותה שלא מתלהב בכלל* מה קורה?"
+    contain = "ממש מוכרת לי"
     people = 50000
     while(True):
         ok = OkCupidSelenium(user_name, password, PATH)

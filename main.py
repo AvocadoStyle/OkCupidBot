@@ -1,6 +1,6 @@
-import classTool
-from classTool import OkCupidSelenium
+from controller.classTool import OkCupidSelenium
 from dict import *
+import time
 
 if __name__ == "__main__":
     like_counter = 0
@@ -8,16 +8,18 @@ if __name__ == "__main__":
     check_counter = 1000
     saved_locations = ["`Akko", "Qiryat Yam", "Haifa", "Qiryat Motzkin", "Qiryat Bialik", "`Afula", "Yoqne`am",
                        "Or `Aqiva", "Tiberias", "Shelomi", "Karmi’el", "Ma`alot", "Hadar HaKarmel"]
-    PATH = "chromedriver.exe"
+    driver_path = "chromedriver.exe"
+    okcupid_url = "https://www.okcupid.com"
     user_name = T["user_name"]
     password = T["password"]
     # ok = OkCupidSelenium(user_name, password, PATH)
     # contain = "*משחק אותה שלא מתלהב בכלל* מה קורה?"
-    contain = "ממש מוכרת לי"
+    contain = "אז מה את עושה בחיים חוץ מלדגמן?"
     people = 50000
-    while(True):
-        ok = OkCupidSelenium(user_name, password, PATH)
-        driver = ok.getDriver()
+    ok = OkCupidSelenium(user_name, password, driver_path, okcupid_url)
+    while True:
+        ok.like_action.like()
+        time.sleep(10)
         # ok.login(driver)
         # input("type when you're ready")
         ######################################################################
@@ -38,9 +40,9 @@ if __name__ == "__main__":
         # print("the dislike counter is: {}\n".format(dislike_counter))
         ####################################################################
 
-        ok.message(driver, contain, people)
-        classTool.time.sleep(100)
-        ok.close(driver)
+        # ok.message(driver, contain, people)
+        # classTool.time.sleep(100)
+        # ok.close(driver)
 
 
 

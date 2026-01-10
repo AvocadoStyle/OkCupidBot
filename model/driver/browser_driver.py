@@ -4,6 +4,7 @@ import time
 from selenium.webdriver import Keys
 
 from model.Utilities.operation_utils import sleep_decorator
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 class BrowserDriver:
@@ -20,7 +21,9 @@ class BrowserDriver:
         options = webdriver.ChromeOptions()
         if user_cached_data:
             options.add_argument(fr"user-data-dir={user_cached_data}")
-        driver = webdriver.Chrome(executable_path=self.driver_path, chrome_options=options)
+        # driver = webdriver.Chrome(executable_path=self.driver_path, chrome_options=options)
+        driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=options)
+
         driver.set_window_size(1900, 1024)  # TODO: fix the magic numbers.
         driver.get(self.url_path_hanlder.url)
         time.sleep(3)

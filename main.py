@@ -1,6 +1,12 @@
 from controller.classTool import OkCupidSelenium
-from dict import *
+import os
+from dotenv import load_dotenv
 import time
+
+T = {
+    "user_name": os.getenv("USER_NAME"),
+    "password": os.getenv("PASSWORD"),
+}
 
 if __name__ == "__main__":
     like_counter = 0

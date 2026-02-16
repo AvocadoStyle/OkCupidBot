@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(poetry lock:*)",
+      "Bash(poetry install:*)",
+      "Bash(poetry run python:*)",
+      "Bash(poetry add:*)",
+      "Bash(taskkill:*)",
+      "Bash(/c/work/git_repos/OkCupidBot/chromedriver.exe:*)"
+    ]
+  }
+}

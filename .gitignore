@@ -56,3 +56,4 @@ dmypy.json
 # User data
 user_data/
 chrome_data/
+chrome_bot_profile/

@@ -1,30 +1,38 @@
+import os
+import undetected_chromedriver as uc
 from selenium import webdriver
+from selenium.webdriver import Keys
 import time
 
-from selenium.webdriver import Keys
-
 from model.Utilities.operation_utils import sleep_decorator
-from webdriver_manager.chrome import ChromeDriverManager
+
+BOT_PROFILE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "chrome_bot_profile"))
 
 
 class BrowserDriver:
-    def __init__(self, driver_path, url):
+    def __init__(self, driver_path, url, auto_install_driver=True):
         self.driver_path = driver_path
+        self.auto_install_driver = auto_install_driver
         self.driver = None
         self.url_path_hanlder = UrlPath(url)
 
-    def setupDriver(self, user_cached_data=None):
+    def setupDriver(self):
         """
-        Setup the chrome driver.
-        :param user_cached_data: If there is user credentials cache data will direct to the folder which its resides.
+        Setup the chrome driver using undetected-chromedriver to bypass Cloudflare.
+        Uses a dedicated bot profile at chrome_bot_profile/.
+        First run: log in manually in the browser, then press Enter in the terminal.
+        Next runs: already logged in via saved cookies.
         """
-        options = webdriver.ChromeOptions()
-        if user_cached_data:
-            options.add_argument(fr"user-data-dir={user_cached_data}")
-        # driver = webdriver.Chrome(executable_path=self.driver_path, chrome_options=options)
-        driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=options)
-
-        driver.set_window_size(1900, 1024)  # TODO: fix the magic numbers.
+        options = uc.ChromeOptions()
+        driver_executable_path = None if self.auto_install_driver else os.path.abspath(self.driver_path)
+        driver = uc.Chrome(
+            driver_executable_path=driver_executable_path,
+            options=options,
+            user_data_dir=BOT_PROFILE_DIR,
+            version_main=144,
+        )
+        time.sleep(3)
+        driver.set_window_size(1900, 1024)
         driver.get(self.url_path_hanlder.url)
         time.sleep(3)
         self.driver = driver

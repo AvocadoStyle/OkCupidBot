@@ -19,9 +19,10 @@ class Like(OperationAction):
     def close_widget_superlike_suggest(self):
         try:
             # self.browser_driver.driver.find_element(By.XPATH, "/html/body/div[3]/div[1]/div/div/button[2]").click()
-            WebDriverWait(self.browser_driver.driver, 10).until(
-                EC.presence_of_all_elements_located((By.XPATH, "/html/body/div[3]/div[1]/div/div/button[2]"))
-            ).click()
+            element = WebDriverWait(self.browser_driver.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div[1]/div/div/button[2]"))
+            )
+            element.click()
         except NoSuchElementException as e:
             print(f"There are not open pop-widgets,"
                   f"Will not close any widget, Expected behavior, Expected behavior!")

@@ -12,9 +12,10 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
-selenium = "4.2.0"
+selenium = "^4.25.0"
 python-dotenv = "^1.2.1"
 webdriver-manager = "^4.0.2"
+undetected-chromedriver = "^3.5.5"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.0.0"

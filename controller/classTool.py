@@ -14,20 +14,20 @@ from model.action.message_action import Message
 
 
 class OkCupidSelenium:
-    def __init__(self, user_name, password, driver_path, url, user_cached_data=None):
-        self.browser_driver: BrowserDriver = BrowserDriver(driver_path, url)
+    def __init__(self, user_name, password, driver_path, url, auto_install_driver=True):
+        self.browser_driver: BrowserDriver = BrowserDriver(driver_path, url, auto_install_driver=auto_install_driver)
         self.browser_action: BrowserAction = BrowserAction(self.browser_driver)
         self.user_credentials: User = User(user_name, password)
         self.like_action: Like = None
         self.message_action: Message = None
-        self.initialize_objects(user_cached_data)
+        self.initialize_objects()
 
-    def initialize_objects(self, user_cached_data):
+    def initialize_objects(self):
         """
         The main initializer of all the handlers
         """
         # Setup the driver object
-        self.browser_driver.setupDriver(user_cached_data=user_cached_data)
+        self.browser_driver.setupDriver()
         self.like_action = Like(browser_driver=self.browser_driver, browser_action=self.browser_action)
         self.message_action = Message(browser_driver=self.browser_driver, browser_action=self.browser_action)
         print("hey")

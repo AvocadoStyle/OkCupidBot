@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 import time
 
+load_dotenv()
+
 T = {
     "user_name": os.getenv("USER_NAME"),
     "password": os.getenv("PASSWORD"),
@@ -24,12 +26,14 @@ if __name__ == "__main__":
     # contain = "*משחק אותה שלא מתלהב* מה קורה?"
     # contain = "את ממש מוכרת לי"
     people = 50000
-    # gets the cache data path of the user, And if there isn't it will retrieve `None`, And it's valid behavior.
-    # such as the path: Chrome\User Data\Profile 1
-    usr_cached_data = T.get('user_cache_data')
+    auto_install_driver = os.getenv("AUTO_INSTALL_DRIVER", "true").lower() == "true"
     ok = OkCupidSelenium(
         user_name=user_name, password=password, driver_path=driver_path, url=okcupid_url,
-        user_cached_data=usr_cached_data)
+        auto_install_driver=auto_install_driver)
+    # Wait for page to settle, then check if logged in
+    time.sleep(5)
+    if "/discover" not in ok.browser_driver.driver.current_url:
+        input("[*] Not logged in. Log in now in the browser, then press Enter...")
     people_max_qty_to_msg = 40
     while True:
         message_again = ok.message_action.message(msg_to_send=contain)
